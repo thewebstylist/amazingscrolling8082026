@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#000000" />
+    <title>HELION AXIS — Built From Light</title>
+    <meta
+      name="description"
+      content="HELION AXIS. A hypercar that only exists in light. A launch film in magenta and cyan."
+    />
+
+    <!-- Fonts: Archivo (variable width + weight) and Martian Mono. No third face, no system fallback of the same character. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Martian+Mono:wght@300..800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Grain + vignette overlays (full page, pointer-events none) -->
+    <div class="fx-grain" aria-hidden="true"></div>
+    <div class="fx-vignette" aria-hidden="true"></div>
+
+    <!-- Custom cursor -->
+    <div class="cursor" aria-hidden="true">
+      <div class="cursor__dot"></div>
+    </div>
+
+    <!-- LOADER -->
+    <div class="loader" id="loader">
+      <video
+        class="loader__video"
+        id="loader-video"
+        playsinline
+        muted
+        preload="auto"
+        loop
+        poster="/poster.webp"
+      ></video>
+      <div class="loader__scrim" aria-hidden="true"></div>
+      <div class="loader__inner">
+        <div class="loader__wordmark">HELION</div>
+        <div class="loader__meta">AXIS · ELECTRIC HYPERCAR · Nº 001</div>
+      </div>
+      <div class="loader__progress" id="loader-progress">
+        <span class="loader__bar" id="loader-bar"></span>
+      </div>
+      <div class="loader__split loader__split--top" aria-hidden="true"></div>
+      <div class="loader__split loader__split--bottom" aria-hidden="true"></div>
+    </div>
+
+    <!-- SITE -->
+    <div class="site" id="site">
+      <!-- NAV -->
+      <header class="nav">
+        <a class="nav__mark" href="#hero" data-link>HELION</a>
+        <nav class="nav__links">
+          <a href="#hero" data-link>The Car</a>
+          <a href="#specs" data-link>Specs</a>
+        </nav>
+        <div class="nav__badge">Nº 001 / 099</div>
+      </header>
+
+      <!-- HERO (pinned, scrubbed canvas) -->
+      <section class="hero" id="hero">
+        <div class="hero__stage">
+          <canvas class="hero__canvas" id="hero-canvas"></canvas>
+          <img class="hero__poster" id="hero-poster" src="/poster.webp" alt="" aria-hidden="true" />
+        </div>
+
+        <div class="hero__ui">
+          <div class="hero__display">
+            <h1 class="display" data-scramble aria-label="AXIS">AXIS</h1>
+          </div>
+
+          <div class="hero__lower">
+            <p class="hero__lede" data-lines>
+              <span class="line">A hypercar that only exists in light.</span>
+              <span class="line">Scroll to turn it over.</span>
+            </p>
+            <a class="btn-magnetic" href="#specs" data-link data-magnetic>
+              <span class="btn-magnetic__label">Reserve Nº 001</span>
+            </a>
+          </div>
+
+          <div class="hero__hint" data-lines>
+            <span class="line">DRAG THE LIGHT</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SPECS -->
+      <section class="specs" id="specs">
+        <p class="specs__kicker" data-lines><span class="line">Measured in light-years, rounded down.</span></p>
+        <ul class="specs__list">
+          <li class="spec">
+            <span class="spec__num" data-count="1340" data-decimals="0">0</span>
+            <span class="spec__label">Horsepower · all-electric</span>
+          </li>
+          <li class="spec">
+            <span class="spec__num" data-count="2.1" data-decimals="1" data-suffix="s">0</span>
+            <span class="spec__label">0–100 km/h</span>
+          </li>
+          <li class="spec">
+            <span class="spec__num" data-count="412" data-decimals="0">0</span>
+            <span class="spec__label">Top speed · km/h</span>
+          </li>
+          <li class="spec">
+            <span class="spec__num" data-count="99" data-decimals="0">0</span>
+            <span class="spec__label">Built · ever</span>
+          </li>
+        </ul>
+      </section>
+
+      <!-- FOOTER -->
+      <footer class="footer">
+        <div class="footer__mark">HELION</div>
+        <div class="footer__meta">
+          <span>AXIS — a fiction in light</span>
+          <span>© 2026 · Not a real car</span>
+        </div>
+      </footer>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
