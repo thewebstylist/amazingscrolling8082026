@@ -2,7 +2,7 @@ import './style.css';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-import { useFrameSequence } from './modules/env.js';
+import { useFrameSequence, manifestPath } from './modules/env.js';
 import './modules/eases.js';
 import { initScroll, stopScroll, startScroll } from './modules/scroll.js';
 import { loadManifest, preloadFrames } from './modules/frames.js';
@@ -39,8 +39,8 @@ async function boot() {
   // The frame preloader handed to the loader (desktop only).
   const preload = async (onProgress) => {
     if (!useFrameSequence) return null;
-    const manifest = await loadManifest();
-    return preloadFrames(manifest, onProgress, 10);
+    const manifest = await loadManifest(manifestPath);
+    return preloadFrames(manifest, onProgress, 8);
   };
 
   const images = await runLoader(preload);

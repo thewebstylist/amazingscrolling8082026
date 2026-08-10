@@ -1,0 +1,11 @@
+{
+  "dir": "/frames-m",
+  "prefix": "frame_",
+  "ext": "webp",
+  "pad": 4,
+  "first": 1,
+  "count": 240,
+  "fps": 8,
+  "width": 900,
+  "height": 386
+}

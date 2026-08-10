@@ -1,4 +1,5 @@
 {
+  "dir": "/frames",
   "prefix": "frame_",
   "ext": "webp",
   "pad": 4,

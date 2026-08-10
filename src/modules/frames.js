@@ -2,16 +2,17 @@
 
 let manifest = null;
 
-export async function loadManifest() {
+export async function loadManifest(path = '/frames/manifest.json') {
   if (manifest) return manifest;
-  const res = await fetch('/frames/manifest.json');
+  const res = await fetch(path);
   manifest = await res.json();
   return manifest;
 }
 
 export function frameUrl(m, i) {
   const n = String(m.first + i).padStart(m.pad, '0');
-  return `/frames/${m.prefix}${n}.${m.ext}`;
+  const dir = m.dir || '/frames';
+  return `${dir}/${m.prefix}${n}.${m.ext}`;
 }
 
 /**

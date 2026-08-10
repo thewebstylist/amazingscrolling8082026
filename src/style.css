@@ -454,6 +454,40 @@ canvas, img, video { display: block; max-width: 100%; }
 [data-lines] .line { will-change: transform; }
 .display { will-change: transform; }
 
+/* =========================================================================
+   MOBILE — the hero still scrubs (from a lighter frame set); the display is
+   sized to sit fully on screen instead of chopping a letter in half.
+   ========================================================================= */
+@supports (height: 100svh) {
+  .hero { height: 100svh; }
+  .loader { height: 100svh; }
+}
+
+@media (max-width: 820px) {
+  .hero__ui {
+    padding: calc(var(--nav-h) + 1.4vh) var(--pad)
+             calc(var(--pad) + env(safe-area-inset-bottom, 0px) + 0.4rem);
+  }
+  .hero__display { overflow: visible; text-align: center; }
+  .display {
+    font-size: clamp(3.2rem, 33vw, 8rem);
+    font-variation-settings: 'wght' 900, 'wdth' 100;
+    letter-spacing: -0.02em;
+    margin-left: 0;
+    white-space: nowrap;
+  }
+  .hero__lower { gap: 1.1rem; align-items: flex-start; flex-direction: column; }
+  .hero__lede { line-height: 1.75; }
+  .btn-magnetic { padding: 0.85rem 1.3rem; }
+  .nav { mix-blend-mode: difference; }
+
+  .specs { padding: clamp(4.5rem, 12vh, 9rem) var(--pad); }
+  .spec { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+  .spec__label { text-align: left; }
+  .footer { flex-direction: column; align-items: flex-start; gap: 1.4rem; }
+  .footer__meta { text-align: left; }
+}
+
 /* Under reduced motion: everything is simply visible, page scrolls normally */
 @media (prefers-reduced-motion: reduce) {
   .fx-grain { animation: none; }

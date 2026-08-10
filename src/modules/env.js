@@ -3,10 +3,17 @@ export const prefersReducedMotion = window.matchMedia(
   '(prefers-reduced-motion: reduce)'
 ).matches;
 
-// Coarse pointer OR narrow viewport → treat as mobile: no frame sequence download.
+// Coarse pointer OR narrow viewport → phone/tablet. Still gets the scrub, but
+// from a lighter frame set.
 export const isMobile =
   window.matchMedia('(hover: none), (pointer: coarse)').matches ||
   window.innerWidth < 820;
 
-// Only desktop, motion-friendly visitors get the full scrubbed frame sequence.
-export const useFrameSequence = !prefersReducedMotion && !isMobile;
+// Everyone who hasn't asked for reduced motion gets the scrubbed hero.
+// Mobile just pulls a smaller, decimated sequence.
+export const useFrameSequence = !prefersReducedMotion;
+
+// Which manifest to load for the hero scrub.
+export const manifestPath = isMobile
+  ? '/frames-m/manifest.json'
+  : '/frames/manifest.json';
