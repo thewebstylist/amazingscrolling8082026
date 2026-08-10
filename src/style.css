@@ -455,6 +455,199 @@ canvas, img, video { display: block; max-width: 100%; }
 .display { will-change: transform; }
 
 /* =========================================================================
+   NAV RIGHT + SOUND TOGGLE
+   ========================================================================= */
+.nav__right { display: flex; align-items: center; gap: clamp(1rem, 2.4vw, 2rem); }
+.sound {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  font-family: var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.26em;
+  font-size: clamp(0.56rem, 0.85vw, 0.7rem);
+  padding: 0;
+}
+.sound__bars { display: inline-flex; align-items: flex-end; gap: 2px; height: 12px; }
+.sound__bars i { width: 2px; height: 3px; background: currentColor; }
+.sound.is-playing .sound__bars i { animation: eq 0.9s ease-in-out infinite; }
+.sound.is-playing .sound__bars i:nth-child(2) { animation-delay: 0.18s; }
+.sound.is-playing .sound__bars i:nth-child(3) { animation-delay: 0.36s; }
+.sound.is-playing .sound__bars i:nth-child(4) { animation-delay: 0.12s; }
+@keyframes eq { 0%, 100% { height: 3px; } 50% { height: 12px; } }
+@media (max-width: 460px) { .sound__label { display: none; } }
+
+/* =========================================================================
+   CHAPTER RAIL
+   ========================================================================= */
+.rail {
+  position: fixed;
+  left: var(--pad);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 70;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.6s var(--ease-entrance);
+  mix-blend-mode: difference;
+}
+.rail.is-visible { opacity: 1; }
+.rail__list { display: flex; flex-direction: column; gap: 1.05rem; }
+.rail__item {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-family: var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  font-size: 0.6rem;
+  color: #fff;
+  opacity: 0.32;
+  transition: opacity 0.5s var(--ease-entrance);
+}
+.rail__item::before {
+  content: '';
+  width: 14px; height: 1px;
+  background: currentColor;
+  transition: width 0.5s var(--ease-entrance);
+}
+.rail__item.is-active { opacity: 1; }
+.rail__item.is-active::before { width: 34px; }
+@media (max-width: 900px) { .rail { display: none; } }
+
+/* =========================================================================
+   HERO ACTS (statements that pass through as the car turns)
+   ========================================================================= */
+.hero__acts { position: absolute; inset: 0; z-index: 5; pointer-events: none; }
+.act {
+  position: absolute;
+  left: var(--pad);
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: 62vw;
+}
+.act__eyebrow {
+  font-family: var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  font-size: clamp(0.6rem, 0.9vw, 0.75rem);
+  color: var(--bone-dim);
+  margin-bottom: 1.1rem;
+  opacity: 0; /* revealed by the scrubbed hero timeline */
+}
+.act__title {
+  font-family: var(--display);
+  font-weight: 900;
+  font-variation-settings: 'wght' 900, 'wdth' 118;
+  font-size: clamp(3rem, 12vw, 11rem);
+  line-height: 0.84;
+  letter-spacing: -0.035em;
+  color: var(--bone);
+  text-shadow: -1px 0 rgba(34,233,255,0.55), 1px 0 rgba(255,44,209,0.55);
+  opacity: 0; /* revealed by the scrubbed hero timeline */
+}
+.hero__hint.is-gone { opacity: 0; transition: opacity 0.4s var(--ease-exit); }
+
+/* =========================================================================
+   ROTATION READOUT (idle hint swaps to this after handover)
+   ========================================================================= */
+.hero__readout {
+  position: absolute;
+  right: var(--pad);
+  bottom: calc(var(--pad) + 0.2rem);
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.3rem;
+  text-align: right;
+  opacity: 0;
+  transition: opacity 0.5s var(--ease-entrance);
+  pointer-events: none;
+}
+.hero__readout.is-visible { opacity: 1; }
+.readout__deg {
+  font-family: var(--display);
+  font-weight: 900;
+  font-variation-settings: 'wght' 900, 'wdth' 110;
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  letter-spacing: -0.02em;
+  color: var(--bone);
+  text-shadow: -1px 0 rgba(34,233,255,0.5), 1px 0 rgba(255,44,209,0.5);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+.readout__frame {
+  font-family: var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+  font-size: clamp(0.5rem, 0.7vw, 0.6rem);
+  color: var(--bone-dim);
+}
+
+/* =========================================================================
+   POINTER LIGHT on the hero (cursor-reactive bloom)
+   ========================================================================= */
+.hero__light {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  mix-blend-mode: screen;
+  background: radial-gradient(
+    260px 260px at var(--mx, 50%) var(--my, 45%),
+    rgba(255, 44, 209, 0.16),
+    rgba(34, 233, 255, 0.09) 42%,
+    transparent 70%
+  );
+  transition: opacity 0.6s var(--ease-entrance);
+}
+.hero.is-lit .hero__light { opacity: 1; }
+
+/* =========================================================================
+   SPECS AS CINEMA — each number is its own full-viewport panel
+   ========================================================================= */
+.specs { gap: 0; padding: clamp(4rem, 10vh, 8rem) var(--pad) 0; }
+.specs__kicker { margin-bottom: 0; }
+.panel {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0.5rem;
+  position: relative;
+}
+.panel__index {
+  font-family: var(--mono);
+  letter-spacing: 0.3em;
+  font-size: clamp(0.6rem, 0.8vw, 0.72rem);
+  color: var(--bone-dim);
+  margin-bottom: 0.4rem;
+}
+.panel__num { display: block; }
+.panel__label {
+  font-family: var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.26em;
+  font-size: clamp(0.72rem, 1vw, 0.95rem);
+  color: var(--bone);
+  margin-top: 0.6rem;
+}
+.panel__sub {
+  font-family: var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: clamp(0.6rem, 0.8vw, 0.72rem);
+  color: var(--bone-dim);
+}
+
+/* =========================================================================
    MOBILE — the hero still scrubs (from a lighter frame set); the display is
    sized to sit fully on screen instead of chopping a letter in half.
    ========================================================================= */
@@ -486,6 +679,11 @@ canvas, img, video { display: block; max-width: 100%; }
   .spec__label { text-align: left; }
   .footer { flex-direction: column; align-items: flex-start; gap: 1.4rem; }
   .footer__meta { text-align: left; }
+
+  .act { max-width: 88vw; }
+  .act__title { font-size: clamp(2.8rem, 18vw, 6rem); font-variation-settings: 'wght' 900, 'wdth' 105; }
+  .hero__readout { bottom: calc(var(--pad) + env(safe-area-inset-bottom, 0px)); }
+  .panel { min-height: 88svh; }
 }
 
 /* Under reduced motion: everything is simply visible, page scrolls normally */

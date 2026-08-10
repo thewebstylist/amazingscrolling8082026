@@ -86,17 +86,35 @@
           <a href="#hero" data-link>The Car</a>
           <a href="#specs" data-link>Specs</a>
         </nav>
-        <div class="nav__badge">Nº 001 / 099</div>
+        <div class="nav__right">
+          <div class="nav__badge">Nº 001 / 099</div>
+          <button class="sound" id="sound-toggle" aria-pressed="false" aria-label="Toggle ambient sound">
+            <span class="sound__bars"><i></i><i></i><i></i><i></i></span>
+            <span class="sound__label">Sound</span>
+          </button>
+        </div>
       </header>
+
+      <!-- CHAPTER RAIL (visible while the hero is pinned) -->
+      <aside class="rail" id="rail" aria-hidden="true">
+        <ol class="rail__list">
+          <li class="rail__item is-active"><span>Reveal</span></li>
+          <li class="rail__item"><span>Surface</span></li>
+          <li class="rail__item"><span>Every&nbsp;angle</span></li>
+          <li class="rail__item"><span>Reserve</span></li>
+        </ol>
+      </aside>
 
       <!-- HERO (pinned, scrubbed canvas) -->
       <section class="hero" id="hero">
         <div class="hero__stage">
           <canvas class="hero__canvas" id="hero-canvas"></canvas>
           <img class="hero__poster" id="hero-poster" src="/poster.webp" alt="" aria-hidden="true" />
+          <div class="hero__light" id="hero-light" aria-hidden="true"></div>
         </div>
 
-        <div class="hero__ui">
+        <!-- Act I — the wordmark, holds on load -->
+        <div class="hero__ui" data-act-block="1">
           <div class="hero__display">
             <h1 class="display" data-scramble aria-label="AXIS">AXIS</h1>
           </div>
@@ -110,34 +128,64 @@
               <span class="btn-magnetic__label">Reserve Nº 001</span>
             </a>
           </div>
+        </div>
 
-          <div class="hero__hint" data-lines>
-            <span class="line">DRAG THE LIGHT</span>
+        <!-- Acts II & III — statements that pass through as the car turns -->
+        <div class="hero__acts" aria-hidden="true">
+          <div class="act" data-act-block="2">
+            <p class="act__eyebrow">02 — Surface</p>
+            <h2 class="act__title">Light<br />has a<br />shape</h2>
           </div>
+          <div class="act" data-act-block="3">
+            <p class="act__eyebrow">03 — Every angle</p>
+            <h2 class="act__title">Nothing<br />hidden</h2>
+          </div>
+        </div>
+
+        <!-- Idle hint → live rotation readout after handover -->
+        <div class="hero__hint" id="hero-hint" data-lines>
+          <span class="line">DRAG THE LIGHT</span>
+        </div>
+        <div class="hero__readout" id="readout" aria-hidden="true">
+          <span class="readout__deg" id="readout-deg">000°</span>
+          <span class="readout__frame" id="readout-frame">FRAME 000 / 000</span>
         </div>
       </section>
 
-      <!-- SPECS -->
+      <!-- SPECS — each number is its own cinema panel, counting up on entry -->
       <section class="specs" id="specs">
-        <p class="specs__kicker" data-lines><span class="line">Measured in light-years, rounded down.</span></p>
-        <ul class="specs__list">
-          <li class="spec">
-            <span class="spec__num" data-count="1340" data-decimals="0">0</span>
-            <span class="spec__label">Horsepower · all-electric</span>
-          </li>
-          <li class="spec">
-            <span class="spec__num" data-count="2.1" data-decimals="1" data-suffix="s">0</span>
-            <span class="spec__label">0–100 km/h</span>
-          </li>
-          <li class="spec">
-            <span class="spec__num" data-count="412" data-decimals="0">0</span>
-            <span class="spec__label">Top speed · km/h</span>
-          </li>
-          <li class="spec">
-            <span class="spec__num" data-count="99" data-decimals="0">0</span>
-            <span class="spec__label">Built · ever</span>
-          </li>
-        </ul>
+        <p class="specs__kicker" data-lines>
+          <span class="line">The numbers,</span>
+          <span class="line">measured in light.</span>
+        </p>
+
+        <article class="panel">
+          <span class="panel__index">01</span>
+          <span class="spec__num panel__num" data-count="1340" data-decimals="0">0</span>
+          <span class="panel__label">Horsepower</span>
+          <span class="panel__sub">All-electric · tri-motor</span>
+        </article>
+
+        <article class="panel">
+          <span class="panel__index">02</span>
+          <span class="spec__num panel__num" data-count="2.1" data-decimals="1" data-suffix="s">0</span>
+          <span class="panel__label">0–100 km/h</span>
+          <span class="panel__sub">Launch, from rest</span>
+        </article>
+
+        <article class="panel">
+          <span class="panel__index">03</span>
+          <span class="spec__num panel__num" data-count="412" data-decimals="0">0</span>
+          <span class="panel__label">Top speed · km/h</span>
+          <span class="panel__sub">Electronically unbothered</span>
+        </article>
+
+        <article class="panel">
+          <span class="panel__index">04</span>
+          <span class="spec__num panel__num" data-count="99" data-decimals="0">0</span>
+          <span class="panel__label">Built, ever</span>
+          <span class="panel__sub">Each one numbered</span>
+        </article>
       </section>
 
       <!-- FOOTER -->

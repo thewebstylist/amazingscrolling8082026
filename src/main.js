@@ -18,6 +18,8 @@ import {
   initScrollReveals
 } from './modules/reveal.js';
 import { initSpecs } from './modules/specs.js';
+import { initHud } from './modules/hud.js';
+import { initAudio } from './modules/audio.js';
 
 // Hide lines before first paint so nothing flashes ahead of its reveal.
 prepLines();
@@ -35,6 +37,7 @@ async function boot() {
   // interactive bits can be live immediately (they sit over the loader too)
   initCursor();
   initMagnetic();
+  initAudio();
 
   // The frame preloader handed to the loader (desktop only).
   const preload = async (onProgress) => {
@@ -47,6 +50,7 @@ async function boot() {
 
   // Hero is now interactive.
   initHero(images);
+  initHud();
   ScrollTrigger.refresh();
 
   lockScroll(false);
